@@ -10,6 +10,8 @@ class CPU:
         """Construct a new CPU."""
         self.reg = [0] * 8
         self.pc = 0
+        self.sp = 0
+        self.stack = []
 
     def load(self):
         """Load a program into memory."""
@@ -24,7 +26,7 @@ class CPU:
 
         address = 0
         self.ram = [0] * (len(program)+2)
-        print(program, len(program), self.ram)
+        # print(program, len(program), self.ram)
 
         for instruction in program:
             self.ram[address] = instruction
@@ -67,6 +69,8 @@ class CPU:
         LDI = 130
         PRN = 71
         MUL = 162
+        PUSH = 69
+        POP = 70
         running = True
 
         while running:
@@ -91,9 +95,22 @@ class CPU:
             elif op == MUL:
                 self.reg[reg_a] *= self.reg[reg_b]
                 self.pc += 3
+            elif op == PUSH:
+                self.stack.append(self.reg[reg_a])
+                # print(self.stack)
+                self.pc += 2
+                # self.sp -= 1
+            elif op == POP:
+                value = self.stack[-1]
+                del self.stack[-1]
+                self.reg[reg_a] = value
+                self.pc += 2
+                # self.sp += 1
+
             else:
                 # self.alu(op, self.ram[self.pc + 1], self.ram[self.pc+2])
                 print('no valid Command')
+                self.pc += 1
 
     def ram_read(self, mar):
         return self.ram[mar]
