@@ -1,0 +1,13 @@
+    1
+    4  # SAVE 65 into R2
+    65
+    2
+    4  # Save 20 into R3
+    20
+    3
+    6   # Add R2 + R3 = 65 + 20, store in R2
+    2
+    3
+    5
+    2
+    2

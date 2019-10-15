@@ -1,0 +1,72 @@
+str = "101110"
+​
+def to_decimal(num_string, base):
+    digit_list = list(num_string)
+    digit_list.reverse()
+    value = 0
+    for i in range(len(digit_list)):
+        print(f"+({int(digit_list[i])} * {base ** i})")
+        value += int(digit_list[i]) * (base ** i)
+    return value
+​
+to_decimal(str, 2)
+
+#======================================
+day 2
+#=======================================
+and or 
+xor - either or
+nand - not and
+nor - not or
+
+not (a nd b) and not (not a or not b) == False
+
+not (a and b) == not a or not b
+
+- Bitwise operations
+    - Logical operations
+    - Bit shift
+    - Bit mask
+
+0b 0101 0110
+0d​86
+0x56 {f"ob01010110:x}
+
+1100 0011
+1+2+64+128 = 195
+0xC3
+
+86 & 195 = 66 ?
+# how it works
+
+  01010110
+& 11000011
+----------
+  01000010
+
+2+64 = 66
+
+# or
+  01010110
+| 11000011
+----------
+  11010111
+
+7+16+64+128 = 215
+
+# Bit shift
+01010110 >> 1
+00101011 >> 1
+00010101 >> 1
+
+01010110 << 1
+10101100 << 1
+01011000 << 1
+
+01010110 >> 6 = 1
+
+# Bit MASK
+    01010110
+and 00001110
+--------------
+    00000110
