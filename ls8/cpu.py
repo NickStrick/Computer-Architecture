@@ -11,7 +11,7 @@ class CPU:
         self.reg = [0] * 8
         self.ram = [0] * 256
         self.pc = 0
-        self.sp = 0
+        self.sp = 7
         self.stack = []
 
     def load(self):
@@ -38,7 +38,6 @@ class CPU:
         if op == "ADD":
             self.reg[reg_a] += self.reg[reg_b]
             self.pc += 3
-        # elif op == "SUB": etc
         else:
             raise Exception("Unsupported ALU operation")
 
@@ -92,13 +91,15 @@ class CPU:
             self.pc += 3
 
         def PUSH(self, op, reg_a, reg_b):
-            self.stack.append(self.reg[reg_a])
+            value = self.reg[reg_a]
+            self.reg[self.sp] -= 1
+            self.ram[self.reg[self.sp]] = value
             self.pc += 2
 
         def POP(self, op, reg_a, reg_b):
-            value = self.stack[-1]
-            del self.stack[-1]
+            value = self.ram[self.reg[self.sp]]
             self.reg[reg_a] = value
+            self.reg[self.sp] += 1
             self.pc += 2
 
         def CALL(self, op, reg_a, reg_b):
@@ -129,8 +130,7 @@ class CPU:
         while running:
             op = self.ram[self.pc]
             reg_a = self.ram[self.pc + 1]
-            reg_b = self.ram[self.pc+2]
-
+            reg_b = self.ram[self.pc + 2]
             instructions[op](self, op, reg_a, reg_b)
 
     def ram_read(self, mar):
