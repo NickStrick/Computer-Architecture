@@ -38,7 +38,6 @@ class CPU:
         if op == "ADD":
             self.reg[reg_a] += self.reg[reg_b]
             self.pc += 3
-        # elif op == "SUB": etc
         else:
             raise Exception("Unsupported ALU operation")
 
@@ -129,8 +128,7 @@ class CPU:
         while running:
             op = self.ram[self.pc]
             reg_a = self.ram[self.pc + 1]
-            reg_b = self.ram[self.pc+2]
-
+            reg_b = self.ram[self.pc + 2]
             instructions[op](self, op, reg_a, reg_b)
 
     def ram_read(self, mar):
