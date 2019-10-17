@@ -8,6 +8,8 @@ PRINT_REGISTER = 5
 ADD = 6
 PUSH = 7
 POP = 8
+CALL = 9
+RET = 10
 
 # 256 bytes of memory
 memory = [0] * 256
@@ -98,6 +100,20 @@ while running:
         # Increment SP.
         register[SP] += 1
         pc += 2
+    
+    elif command == CALL:
+        register[SP] -= 1
+        memory[register[SP]] = pc +2
+        # The PC is set to the address in the given register
+        reg = memory[pc+1]
+        # We jump to that location in RAM
+        pc = register[reg]
+        
+    elif command == RET:
+        # Return from subroutine.
+        # Pop the value from the top of the stack
+        pc = memory[register[SP]]
+        register[SP] += 1
 
     else:
         print(f"Unknown instruction: {command}")
