@@ -103,13 +103,16 @@ class CPU:
             self.pc += 2
 
         def CALL(self, op, reg_a, reg_b):
-            self.stack.append(self.pc + 2)
+
+            self.reg[self.sp] -= 1
+            self.ram[self.reg[self.sp]] = self.pc + 2
             self.pc = self.reg[reg_a]
 
         def RET(self, op, reg_a, reg_b):
-            value = self.stack[-1]
-            del self.stack[-1]
+            value = self.ram[self.reg[self.sp]]
             self.pc = value
+
+            self.reg[self.sp] += 1
 
         def exception(self, op, reg_a, reg_b):
             print('no valid Command')
